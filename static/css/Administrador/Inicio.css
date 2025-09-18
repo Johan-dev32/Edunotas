@@ -232,3 +232,15 @@ margin-left: 900px;
   font-size: 40px;
   color: #050733ff;
 }
+.scale-up-center {
+  animation: scale-up-center 0.6s ease-in-out both;
+}
+
+@keyframes scale-up-center {
+  0% {
+    transform: scale(.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
