@@ -7,17 +7,6 @@ from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 import pymysql
 
-# --- NUEVO ---
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.application import MIMEApplication
-from email.mime.text import MIMEText
-from apscheduler.schedulers.background import BackgroundScheduler
-from datetime import datetime
-# --- FIN NUEVO ---
-
 # Importa el objeto 'db' y los modelos desde tu archivo de modelos
 from database.models import db, Usuario
 
@@ -495,104 +484,6 @@ def materialapoyo2():
 @app.route('/registrotutorias2')
 def registrotutorias2():
     return render_template('Administrador/templates/RegistroTutorías2.html')
-
-
-# ========================
-# --- NUEVO: RESUMEN SEMANAL ---
-# ========================
-def generar_pdf(actividades, problemas, filename="resumen.pdf"):
-    """Genera un PDF con actividades y problemas"""
-    filepath = os.path.join(os.getcwd(), filename)
-    
-    c = canvas.Canvas(filename, pagesize=letter)
-    width, height = letter
-
-    c.setFont("Helvetica-Bold", 18)
-    c.drawString(200, height - 50, "📄 Resumen Semanal")
-
-    c.setFont("Helvetica", 12)
-    y = height - 100
-
-    c.drawString(50, y, "✅ Actividades realizadas:")
-    y -= 20
-    for act in actividades:
-        c.drawString(70, y, f"- {act}")
-        y -= 15
-
-    y -= 20
-    c.drawString(50, y, "⚠️ Problemas registrados:")
-    y -= 20
-    for prob in problemas:
-        c.drawString(70, y, f"- {prob}")
-        y -= 15
-
-    c.save()
-    return filepath
-
-
-def enviar_resumen_pdf(destinatarios, pdf_path="resumen.pdf"):
-    """Envía el PDF por correo usando Gmail"""
-    remitente = "tucorreo@gmail.com"
-    password = "tu_contraseña_de_aplicacion"
-
-    msg = MIMEMultipart()
-    msg['From'] = remitente
-    msg['To'] = ", ".join(destinatarios)
-    msg['Subject'] = "Resumen semanal de actividades"
-
-    msg.attach(MIMEText("Adjunto encontrarás el resumen semanal en PDF.", "plain"))
-
-    with open(pdf_path, "rb") as f:
-        attach = MIMEApplication(f.read(), _subtype="pdf")
-        attach.add_header('Content-Disposition', 'attachment', filename=pdf_path)
-        msg.attach(attach)
-
-    try:
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login(remitente, password)
-        server.sendmail(remitente, destinatarios, msg.as_string())
-        server.quit()
-        print("Resumen enviado correctamente.")
-    except Exception as e:
-        print("Error al enviar correo:", e)
-
-
-@app.route('/generar', methods=['POST'])   # 👈 ahora coincide con tu resumen.js
-def generar_resumen():
-    """Genera un PDF y lo devuelve como descarga"""
-    data = request.get_json()
-    actividades = data.get("actividades", [])
-    problemas = data.get("problemas", [])
-
-    filename = generar_pdf(actividades, problemas)
-    return send_file(filename, as_attachment=True)
-
-
-@app.route('/enviar_resumen', methods=['POST'])
-def enviar_resumen():
-    """Genera un PDF y lo envía por correo"""
-    data = request.get_json()
-    actividades = data.get("actividades", [])
-    problemas = data.get("problemas", [])
-    destinatarios = data.get("destinatarios", ["docente@colegio.com"])
-
-    filename = generar_pdf(actividades, problemas)
-    enviar_resumen_pdf(destinatarios, filename)
-
-    return jsonify({"message": "Resumen enviado por correo."})
-
-
-def tarea_programada():
-    actividades = ["Clases realizadas", "Reuniones", "Asistencia"]
-    problemas = ["Error en registro de notas", "Falla en servidor"]
-
-    filename = generar_pdf(actividades, problemas)
-    enviar_resumen_pdf(["docente@colegio.com", "gisellleal491@gmail.com"], filename)
-
-
-scheduler = BackgroundScheduler()
-scheduler.add_job(tarea_programada, 'cron', day_of_week='tue', hour=19, minute=10)
 
 
 if __name__ == "__main__":

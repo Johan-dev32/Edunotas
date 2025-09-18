@@ -1,46 +1,34 @@
-document.getElementById("resumenForm").addEventListener("submit", async (e) => {
+document.getElementById("resumenForm").addEventListener("submit", (e) => {
   e.preventDefault();
 
   const actividades = document.getElementById("actividades").value.split(",");
   const problemas = document.getElementById("problemas").value.split(",");
 
-  const res = await fetch("/generar", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ actividades, problemas })
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Título
+  doc.setFontSize(18);
+  doc.text("Resumen Semanal", 14, 20);
+
+  // Actividades en tabla
+  doc.autoTable({
+    startY: 30,
+    head: [["Actividades realizadas"]],
+    body: actividades
+      .filter((a) => a.trim() !== "")
+      .map((a) => [a.trim()]),
   });
 
-  if (!res.ok) {
-    alert("Error al generar el PDF");
-    return;
-  }
+  // Problemas en tabla
+  doc.autoTable({
+    startY: doc.lastAutoTable.finalY + 10,
+    head: [["Problemas encontrados"]],
+    body: problemas
+      .filter((p) => p.trim() !== "")
+      .map((p) => [p.trim()]),
+  });
 
-
-  function generarPDF() {
-    const element = document.querySelector('.container');
-    html2pdf()
-      .from(element)
-      .set({
-        margin: 0.5,
-        filename: 'Manual_Administrador_EduNotas.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      })
-      .save();
-  }
-
-
-  // Creamos un enlace temporal para descargarlo
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "resumen.pdf"; // Nombre del archivo
-  document.body.appendChild(a);
-  a.click();
-
-  // Limpiamos
-  a.remove();
-  window.URL.revokeObjectURL(url);
+  // Descargar PDF
+  doc.save("resumen_semanal.pdf");
 });
-
