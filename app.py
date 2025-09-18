@@ -62,27 +62,27 @@ def index():
 
 @app.route('/paginainicio')
 def paginainicio():
-    return render_template('templates.Administrador/Paginainicio.html')
+    return render_template('Administrador/templates/Paginainicio.html')
 
 @app.route('/perfil')
 @login_required
 def perfil():
-    return render_template('perfil.html', usuario=current_user)
+    return render_template('Administrador/templates/perfil.html', usuario=current_user)
 
 @app.route('/notas')
 def notas():
-    return render_template('Notas.html')
+    return render_template('Administrador/templates/Notas.html')
 
 
 @app.route('/observador')
 def observador():
-    return render_template('Observador.html')
+    return render_template('Administrador/templates/Observador.html')
 
 @app.route('/profesores')
 @login_required
 def profesores():
     docentes = Usuario.query.filter_by(Rol='Docente').all()
-    return render_template('Profesores.html', docentes=docentes)
+    return render_template('Administrador/templates/Profesores.html', docentes=docentes)
 
 @app.route('/agregar_docente', methods=['POST'])
 @login_required
@@ -169,7 +169,7 @@ def eliminar_docente(id):
 @login_required
 def estudiantes():
     estudiantes = Usuario.query.filter_by(Rol='Estudiante').all()
-    return render_template('Estudiantes.html', estudiantes=estudiantes)
+    return render_template('Administrador/templates/Estudiantes.html', estudiantes=estudiantes)
 
 
 @app.route('/agregar_estudiante', methods=['POST'])
@@ -256,7 +256,7 @@ def eliminar_estudiante(id):
 @login_required
 def acudientes():
     acudientes = Usuario.query.filter_by(Rol='Acudiente').all()
-    return render_template('Acudientes.html', acudientes=acudientes)
+    return render_template('Administrador/templates/Acudientes.html', acudientes=acudientes)
 
 
 @app.route('/agregar_acudiente', methods=['POST'])
@@ -336,66 +336,66 @@ def eliminar_acudiente(id):
 
 @app.route('/manual')
 def manual():
-    return render_template('ManualUsuario.html')
+    return render_template('Administrador/templates/ManualUsuario.html')
 
 @app.route('/resumensemanal')
 def resumensemanal():
-    return render_template('ResumenSemanal.html')
+    return render_template('Administrador/templates/ResumenSemanal.html')
 
 @app.route('/registrotutorias')
 def registrotutorias():
-    return render_template('RegistroTutorías.html')
+    return render_template('Administrador/templates/RegistroTutorías.html')
 
 @app.route('/comunicacion')
 def comunicacion():
-    return render_template('Comunicación.html')
+    return render_template('Administrador/templates/Comunicación.html')
 
 @app.route('/materialapoyo')
 def materialapoyo():
-    return render_template('MaterialApoyo.html')
+    return render_template('Administrador/templates/MaterialApoyo.html')
 
 @app.route('/reunion')
 def reunion():
-    return render_template('Reunion.html')
+    return render_template('Administrador/templates/Reunion.html')
 
 
 @app.route('/noticias')
 def noticias():
-    return render_template('Noticias.html')
+    return render_template('Administrador/templates/Noticias.html')
 
 @app.route('/circulares')
 def circulares():
-    return render_template('Circulares.html')
+    return render_template('Administrador/templates/Circulares.html')
 
 @app.route('/noticias_vistas')
 def noticias_vistas():
-    return render_template('NoticiasVistas.html')
+    return render_template('Administrador/templates/NoticiasVistas.html')
 
 @app.route('/usuarios')
 def usuarios():
-    return render_template('Usuarios.html')
+    return render_template('Administrador/templates/Usuarios.html')
 
 @app.route('/asignaturas')
 def asignaturas():
-    return render_template('Asignaturas.html')
+    return render_template('Administrador/templates/Asignaturas.html')
 
 @app.route('/horarios')
 def horarios():
-    return render_template('Horarios.html')
+    return render_template('Administrador/templates/Horarios.html')
 
 @app.route('/registro_notas/<int:curso_id>')
 def registro_notas(curso_id):
-    return render_template('RegistroNotas.html', curso_id=curso_id)
+    return render_template('Administrador/templates/RegistroNotas.html', curso_id=curso_id)
 
 #Conexión de los cursos
 @app.route('/notas/<int:curso_id>')
 def notas_curso(curso_id):
-    return render_template("notas_curso.html", curso_id=curso_id)
+    return render_template("Administrador/templates/notas_curso.html", curso_id=curso_id)
 
 
 @app.route('/notasr')
 def notasr():
-    return render_template('NotasR.html')
+    return render_template('Administrador/templates/NotasR.html')
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -415,13 +415,13 @@ def registro():
         
         if not all([nombre, apellido, correo, contrasena, numero_documento, telefono, direccion, rol]):
             flash('Por favor, completa todos los campos requeridos.')
-            return render_template('Registro.html')
+            return render_template('Administrador/templates/Registro.html')
 
         try:
             existing_user = Usuario.query.filter_by(Correo=correo).first()
             if existing_user:
                 flash('El correo electrónico ya está registrado. Por favor, usa otro.')
-                return render_template('Registro.html')
+                return render_template('Administrador/templates/Registro.html')
 
             hashed_password = generate_password_hash(contrasena)
             
@@ -449,9 +449,9 @@ def registro():
         except SQLAlchemyError as e:
             db.session.rollback()
             flash(f'Ocurrió un error al intentar registrar el usuario: {str(e)}')
-            return render_template('Registro.html')
+            return render_template('Administrador/templates/Registro.html')
 
-    return render_template('Registro.html')
+    return render_template('Administrador/templates/Registro.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -478,7 +478,7 @@ def login():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('Profesores.html')
+    return render_template('Administrador/templates/Profesores.html')
 
 @app.route('/logout')
 @login_required
@@ -490,11 +490,11 @@ def logout():
 #sub-inicio
 @app.route('/materialapoyo2')
 def materialapoyo2():
-    return render_template('MaterialApoyo2.html')
+    return render_template('Administrador/templates/MaterialApoyo2.html')
 
 @app.route('/registrotutorias2')
 def registrotutorias2():
-    return render_template('RegistroTutorías2.html')
+    return render_template('Administrador/templates/RegistroTutorías2.html')
 
 
 # ========================
