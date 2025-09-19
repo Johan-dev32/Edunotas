@@ -108,3 +108,13 @@ header .btn-dark {
   font-size: 0.9rem;
   color: #6c757d;
 }
+.texto-documento{
+  font-family: 'Trebuchet MS', sans-serif;
+  font-weight: bolder;
+  margin-left: 170px;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+.btn-primary{
+  background-color:#050733ff;
+}
