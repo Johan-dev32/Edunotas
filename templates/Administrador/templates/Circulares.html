@@ -110,27 +110,33 @@
  </div>
 </div>
 
-<h1 class="text-center titulo-principal">CREAR NOTICIAS</h1>
-<p class="text-center descripcion">Crea tus Noticias para que el Colegio se informe</p>
+<h1 class="text-center titulo-principal">CREAR CIRCULARES</h1>
+<p class="text-center descripcion">Crea tus Circulares para que el Colegio se informe</p>
 
-<div class="container my-5 p-4 bg-white shadow-sm rounded" style="max-width: 600px;">
-    <form>
-      <div class="mb-3">
-        <label class="form-label fw-bold">COLOCA EL DOCUMENTO</label>
-        <div class="upload-box text-center p-4">
-          <input type="file" id="fileUpload" class="d-none"
-                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif">
-          <label for="fileUpload" class="upload-label">
-            <!-- Ícono -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="blue" class="mb-2" viewBox="0 0 16 16">
-              <path d="M4 0a2 2 0 0 0-2 2v12a2 
-              2 0 0 0 2 2h8a2 2 0 0 0 
-              2-2V6l-6-6H4z"/>
-            </svg>
-            <p class="text-muted">Haz clic para seleccionar un archivo</p>
-          </label>
-        </div>
-      </div>
+<form id="circularForm">
+  <div class="mb-3">
+    <label class="texto-documento ">COLOCA EL DOCUMENTO</label>
+    <div class="upload-box text-center p-4">
+      <input type="file" id="fileUpload" class="d-none"
+             accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif">
+      <label for="fileUpload" class="upload-label">
+        <!-- Ícono -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="blue" class="mb-2" viewBox="0 0 16 16">
+          <path d="M4 0a2 2 0 0 0-2 2v12a2 
+          2 0 0 0 2 2h8a2 2 0 0 0 
+          2-2V6l-6-6H4z"/>
+        </svg>
+        <p class="text-muted">Haz clic para seleccionar un archivo</p>
+      </label>
+    </div>
+  </div>
+  <div class="text-center">
+    <button type="submit" id="btnSubirDocumento" class="btn btn-primary">
+      <i class="bi bi-upload"></i> Subir Documento
+    </button>
+  </div>
+</form>
+</div>
     </form>
   </div>
 

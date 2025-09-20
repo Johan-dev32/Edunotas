@@ -58,7 +58,7 @@
   <p class="txtimg2">Alcanzar la excelencia educativa</p>
   <p class="txtimg3">En el Colegio Fe y Alegría, creemos que la tecnología<br> debe estar al servicio del aprendizaje.<br> Con EduNotas, potenciamos la organización académica, <br>fortalecemos la comunicación y hacemos más eficiente la vida escolar.</p>
   
-<div class="container my-5 mt-2">
+<div class="container my-5 mt-5">
   <ul class="nav nav-pills justify-content-center bg-white p-4 rounded-pill ">
     <li class="nav-item">
       <a  href="{{ url_for('resumensemanal') }}" class="nav-link active rounded-pill px-4">Resumen Semanal</a>
@@ -153,43 +153,50 @@
       <p class="h6">ESTUDIANTILES</p>
       
 
-      <div class="accordion accordion-flush" id="accordionFlushExample">
-        <!-- Circular 1 -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="flush-headingOne">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-              Circular #1
-            </button>
-          </h2>
-          <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-            data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">
-              Contenido de la circular número 1.
-            </div>
-          </div>
-        </div>
+<div class="accordion accordion-flush" id="accordionFlushExample">
+  <!-- Circular 1 -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        Circular #1
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" 
+         aria-labelledby="flush-headingOne"
+         data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body text-center">
+        
+        <!-- Contenedor dinámico para el documento -->
+        <div id="circular1-contenido"></div>
 
-        <!-- Circular 2 -->
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="flush-headingTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-              data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-              Circular #2
-            </button>
-          </h2>
-          <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-            data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">
-              Contenido de la circular número 2.
-            </div>
-          </div>
-        </div>
       </div>
-    </div> <!-- Fin col-md-4 -->
-  </div> <!-- Fin row -->
-</div> <!-- Fin container -->
+    </div>
+  </div>
 
+  <!-- Circular 2 -->
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+        Circular #2
+      </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse" 
+         aria-labelledby="flush-headingTwo"
+         data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body text-center">
+        
+        <!-- Contenedor dinámico para el documento -->
+        <div id="circular2-contenido"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  
           
 <!-- CIRCULARES ESTUDIANTILES -->
 
