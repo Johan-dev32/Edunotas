@@ -1,33 +1,37 @@
-document.getElementById("resumenForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const actividades = document.getElementById("actividades").value.split(",");
-  const problemas = document.getElementById("problemas").value.split(",");
+document.getElementById("btnPDF").addEventListener("click", () => {
+  const fecha = document.getElementById("fecha").value;
+  const autor = document.getElementById("autor").value;
+  const titulo = document.getElementById("titulo").value;
+  const redaccion = document.getElementById("redaccion").value;
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
 
-  // Título
+  // Encabezado
   doc.setFontSize(18);
-  doc.text("Resumen Semanal", 14, 20);
+  doc.setFont("helvetica", "bold");
+  doc.text("Resumen Semanal", 105, 20, { align: "center" });
 
-  // Actividades en tabla
-  doc.autoTable({
-    startY: 30,
-    head: [["Actividades realizadas"]],
-    body: actividades
-      .filter((a) => a.trim() !== "")
-      .map((a) => [a.trim()]),
-  });
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
 
-  // Problemas en tabla
-  doc.autoTable({
-    startY: doc.lastAutoTable.finalY + 10,
-    head: [["Problemas encontrados"]],
-    body: problemas
-      .filter((p) => p.trim() !== "")
-      .map((p) => [p.trim()]),
-  });
+  // Datos generales
+  doc.text(` Fecha: ${fecha}`, 20, 40);
+  doc.text(` Autor: ${autor}`, 20, 50);
+  doc.text(` Título: ${titulo}`, 20, 60);
+
+  // Separador
+  doc.line(20, 70, 190, 70);
+
+  // Actividades
+  doc.setFont("helvetica", "bold");
+  doc.text("Actividades realizadas:", 20, 85);
+
+  doc.setFont("helvetica", "normal");
+
+  // Texto multilínea (ajusta al ancho de la página)
+  const textoActividades = doc.splitTextToSize(redaccion, 170);
+  doc.text(textoActividades, 20, 95);
 
   // Descargar PDF
   doc.save("resumen_semanal.pdf");

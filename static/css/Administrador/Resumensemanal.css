@@ -108,4 +108,90 @@ header .btn-dark {
   font-weight: 900;      
   color: #050733ff;      
   margin-top: 20px;
+  text-align: center;
+}
+
+/* ============================= */
+/* Estilos para el formulario    */
+/* ============================= */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 40px;
+  background: #fff;
+  border: 2px solid #050733ff; /* Borde visible */
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.container h1 {
+  text-align: center;
+  color: #050733ff;
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.container p {
+  text-align: center;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 35px;
+}
+
+.container label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  color: #050733ff;
+}
+
+.container input,
+.container textarea {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 30px; /* Más espacio entre campos */
+  font-size: 16px;
+}
+
+.container input[type="file"] {
+  padding: 30px;
+  border: 2px dashed #ccc;
+  cursor: pointer;
+  background: #fdfdfd;
+  text-align: center;
+  font-size: 16px;
+}
+
+.container .row {
+  display: flex;
+  gap: 30px; /* Más espacio entre columnas */
+}
+
+.container .col {
+  flex: 1;
+}
+
+.container textarea {
+  min-height: 150px; /* Cuadro de texto más grande */
+}
+
+.container button {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  background: #050733ff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background 0.3s ease;
+}
+
+.container button:hover {
+  background: #33396d;
 }

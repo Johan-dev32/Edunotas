@@ -108,25 +108,38 @@
  </div>
 </div>
 
-  <div class="container my-4">
-    <div class="resumen-box">
-      <h1 class="text-center titulo-principal">RESUMEN SEMANAL</h1>
-      <p class="text-center descripcion">CREA EL DOCUMENTO PDF PARA INFORMAR AL COLEGIO</p>
-      
+  <div class="container">
+  <h1 class="titulo">RESUMEN SEMANAL</h1>
+  <p class="subtitulo">CREA EL DOCUMENTO PDF PARA INFORMAR AL COLEGIO</p>
 
-      <form id="resumenForm">
-        <div class="mb-3">
-          <label for="actividades" class="form-label">Actividades realizadas:</label>
-          <textarea id="actividades" class="form-control" placeholder="Ej: Clase de Matemáticas, Reunión Académica"></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="problemas" class="form-label">Problemas encontrados:</label>
-          <textarea id="problemas" class="form-control" placeholder="Ej: Error en calificaciones"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary w-100">Generar PDF</button>
-      </form>
+  <form id="resumenForm">
+
+    <div class="row">
+      <div class="col">
+        <label for="fecha">FECHA</label>
+        <input type="date" id="fecha" name="fecha" required>
+      </div>
+      <div class="col">
+        <label for="autor">CREADO POR</label>
+        <input type="text" id="autor" name="autor" placeholder="Nombre del autor" required>
+      </div>
     </div>
-  </div>
+
+
+    <div class="form-group">
+      <label for="titulo">TITULO</label>
+      <input type="text" id="titulo" name="titulo" placeholder="Escribe el título del documento" required>
+    </div>
+
+    <div class="form-group">
+      <label for="redaccion">ACTIVIDADES REALIZADAS</label>
+      <textarea id="redaccion" name="redaccion" rows="6" placeholder="Escriba las actividades aquí..." required></textarea>
+    </div>
+
+   <button type="button" class="btn" id="btnPDF">Generar PDF</button>
+
+  </form>
+</div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
