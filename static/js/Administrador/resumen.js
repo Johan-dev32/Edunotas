@@ -1,46 +1,38 @@
-document.getElementById("resumenForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+document.getElementById("btnPDF").addEventListener("click", () => {
+  const fecha = document.getElementById("fecha").value;
+  const autor = document.getElementById("autor").value;
+  const titulo = document.getElementById("titulo").value;
+  const redaccion = document.getElementById("redaccion").value;
 
-  const actividades = document.getElementById("actividades").value.split(",");
-  const problemas = document.getElementById("problemas").value.split(",");
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-  const res = await fetch("/generar", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ actividades, problemas })
-  });
+  // Encabezado
+  doc.setFontSize(18);
+  doc.setFont("helvetica", "bold");
+  doc.text("Resumen Semanal", 105, 20, { align: "center" });
 
-  if (!res.ok) {
-    alert("Error al generar el PDF");
-    return;
-  }
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "normal");
 
+  // Datos generales
+  doc.text(` Fecha: ${fecha}`, 20, 40);
+  doc.text(` Autor: ${autor}`, 20, 50);
+  doc.text(` Título: ${titulo}`, 20, 60);
 
-  function generarPDF() {
-    const element = document.querySelector('.container');
-    html2pdf()
-      .from(element)
-      .set({
-        margin: 0.5,
-        filename: 'Manual_Administrador_EduNotas.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      })
-      .save();
-  }
+  // Separador
+  doc.line(20, 70, 190, 70);
 
+  // Actividades
+  doc.setFont("helvetica", "bold");
+  doc.text("Actividades realizadas:", 20, 85);
 
-  // Creamos un enlace temporal para descargarlo
-  const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "resumen.pdf"; // Nombre del archivo
-  document.body.appendChild(a);
-  a.click();
+  doc.setFont("helvetica", "normal");
 
-  // Limpiamos
-  a.remove();
-  window.URL.revokeObjectURL(url);
+  // Texto multilínea (ajusta al ancho de la página)
+  const textoActividades = doc.splitTextToSize(redaccion, 170);
+  doc.text(textoActividades, 20, 95);
+
+  // Descargar PDF
+  doc.save("resumen_semanal.pdf");
 });
-

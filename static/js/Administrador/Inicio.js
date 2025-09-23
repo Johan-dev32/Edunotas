@@ -120,3 +120,23 @@ confirmSend.addEventListener("click", () => {
 
   alert("✅ Noticia publicada correctamente");
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const contenedor = document.getElementById("circular1-contenido");
+
+  const circular = JSON.parse(localStorage.getItem("circular1"));
+
+  if (circular) {
+    if (circular.type.startsWith("image/")) {
+      contenedor.innerHTML = `<img src="${circular.data}" 
+                                class="img-fluid rounded shadow-sm" 
+                                style="max-height:400px;">`;
+    } else if (circular.type === "application/pdf") {
+      contenedor.innerHTML = `<embed src="${circular.data}" 
+                                type="application/pdf" 
+                                width="100%" height="400px">`;
+    } else {
+      contenedor.innerHTML = `<p class="text-muted">Archivo: ${circular.name}</p>`;
+    }
+  }
+});
