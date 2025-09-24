@@ -1,4 +1,7 @@
 import os
+#nuevo
+from werkzeug.utils import secure_filename
+#
 from flask import Flask, render_template, request, redirect, url_for, flash, session, send_file, jsonify  # <-- añadí send_file, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -12,6 +15,11 @@ from database.models import db, Usuario
 
 # Configuración de la aplicación
 app = Flask(__name__)
+
+#nuevo
+UPLOAD_FOLDER = os.path.join("static", "uploads", "circulares")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Configuración de la base de datos
 DB_URL = 'mysql+pymysql://root:@127.0.0.1:3306/edunotas'
@@ -352,9 +360,13 @@ def reunion():
 def noticias():
     return render_template('Administrador/templates/Noticias.html')
 
+#nuevo#################################33
 @app.route('/circulares')
+@login_required
 def circulares():
-    return render_template('Administrador/templates/Circulares.html')
+    files = os.listdir(app.config["UPLOAD_FOLDER"])
+    return render_template('Administrador/templates/Circulares.html', files=files)
+
 
 @app.route('/noticias_vistas')
 def noticias_vistas():
@@ -484,6 +496,24 @@ def materialapoyo2():
 @app.route('/registrotutorias2')
 def registrotutorias2():
     return render_template('Administrador/templates/RegistroTutorías2.html')
+
+#nuevo
+@app.route("/subir_circular", methods=["POST"])
+@login_required
+def subir_circular():
+    if "file" not in request.files:
+        return jsonify({"success": False, "error": "No se envió archivo"})
+    
+    file = request.files["file"]
+    if file.filename == "":
+        return jsonify({"success": False, "error": "Archivo sin nombre"})
+
+    filename = secure_filename(file.filename)
+    filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    file.save(filepath)
+
+
+    return jsonify({"success": True, "filename": filename})
 
 
 if __name__ == "__main__":
