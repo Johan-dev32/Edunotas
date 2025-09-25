@@ -225,9 +225,23 @@ color: white;
   font-size: 40px;
   color: #050733ff;
 }
-.bg-secondary{
+#noticia1.bg-secondary {
   width: 750px;
   height: 300px;
+  background-color: #050733ff !important; /* tu color personalizado */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#noticia1.bg-secondary:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.3);
 }
 .accordion-item{
 margin-left: 900px;
