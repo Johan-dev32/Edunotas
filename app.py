@@ -7,6 +7,11 @@ from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 import pymysql
 
+#lo de fredy:
+from flask import Flask, jsonify
+from sqlalchemy import text 
+
+
 # Importa el objeto 'db' y los modelos desde tu archivo de modelos
 from database.models import db, Usuario
 
@@ -386,6 +391,15 @@ def notas_curso(curso_id):
 def notasr():
     return render_template('Administrador/templates/NotasR.html')
 
+@app.route('/verpromedio')
+def verpromedio():
+    return render_template('Administrador/templates/VerPromedio.html')
+
+@app.route('/calculopromedio/<int:curso_id>')
+def calculopromedio(curso_id):
+    return render_template('Administrador/templates/CalculoPromedio.html', curso_id=curso_id)
+
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     if request.method == 'POST':
@@ -484,6 +498,237 @@ def materialapoyo2():
 @app.route('/registrotutorias2')
 def registrotutorias2():
     return render_template('Administrador/templates/RegistroTutorías2.html')
+
+
+
+
+
+
+
+#esto es lo de fredy :D
+# --------------------- API REST ---------------------
+
+# ----------- USUARIOS -----------
+@app.route('/api/usuarios', methods=['GET'])
+def api_get_usuarios():
+    usuarios = Usuario.query.all()
+    return jsonify([{
+        "id": u.ID_Usuario,
+        "nombre": u.Nombre,
+        "apellido": u.Apellido,
+        "correo": u.Correo,
+        "rol": u.Rol
+    } for u in usuarios])
+
+@app.route('/api/usuarios', methods=['POST'])
+def api_create_usuario():
+    data = request.json
+    try:
+        nuevo = Usuario(
+            Nombre=data['nombre'],
+            Apellido=data['apellido'],
+            Correo=data['correo'],
+            Contrasena=generate_password_hash(data.get('contrasena', "123456")),
+            TipoDocumento=data.get("TipoDocumento", "CC"),
+            NumeroDocumento=data.get("NumeroDocumento", ""),
+            Telefono=data.get("Telefono", ""),
+            Rol=data.get("rol", "Estudiante"),
+            Estado="Activo",
+            Direccion=data.get("Direccion", ""),
+            Genero=data.get("Genero", "Otro")
+        )
+        db.session.add(nuevo)
+        db.session.commit()
+        return jsonify({"mensaje": "Usuario creado", "id": nuevo.ID_Usuario}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/usuarios/<int:id>', methods=['PUT'])
+def api_update_usuario(id):
+    usuario = Usuario.query.get_or_404(id)
+    data = request.json
+    usuario.Nombre = data.get("nombre", usuario.Nombre)
+    usuario.Apellido = data.get("apellido", usuario.Apellido)
+    usuario.Correo = data.get("correo", usuario.Correo)
+    usuario.Telefono = data.get("telefono", usuario.Telefono)
+    db.session.commit()
+    return jsonify({"mensaje": "Usuario actualizado"})
+
+@app.route('/api/usuarios/<int:id>', methods=['DELETE'])
+def api_delete_usuario(id):
+    try:
+        db.session.execute(text("DELETE FROM Usuario WHERE ID_Usuario = :id"), {"id": id})
+        db.session.commit()
+        return jsonify({"mensaje": "Usuario eliminado"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+# ----------- DOCENTES -----------
+@app.route('/api/docentes', methods=['GET'])
+def api_get_docentes():
+    docentes = Usuario.query.filter_by(Rol='Docente').all()
+    return jsonify([{
+        "id": d.ID_Usuario,
+        "nombre": d.Nombre,
+        "apellido": d.Apellido,
+        "correo": d.Correo
+    } for d in docentes])
+
+@app.route('/api/docentes', methods=['POST'])
+def api_create_docente():
+    data = request.json
+    try:
+        nuevo = Usuario(
+            Nombre=data['nombre'],
+            Apellido=data['apellido'],
+            Correo=data['correo'],
+            Contrasena=generate_password_hash("123456"),
+            TipoDocumento="CC",
+            NumeroDocumento=data.get("numero_doc", ""),
+            Telefono=data.get("telefono", ""),
+            Rol="Docente",
+            Estado="Activo",
+            Direccion="",
+            Genero="Otro"
+        )
+        db.session.add(nuevo)
+        db.session.commit()
+        return jsonify({"mensaje": "Docente creado", "id": nuevo.ID_Usuario}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/docentes/<int:id>', methods=['PUT'])
+def api_update_docente(id):
+    docente = Usuario.query.get_or_404(id)
+    data = request.json
+    docente.Nombre = data.get("nombre", docente.Nombre)
+    docente.Apellido = data.get("apellido", docente.Apellido)
+    docente.Correo = data.get("correo", docente.Correo)
+    db.session.commit()
+    return jsonify({"mensaje": "Docente actualizado"})
+
+@app.route('/api/docentes/<int:id>', methods=['DELETE'])
+def api_delete_docente(id):
+    try:
+        db.session.execute(text("DELETE FROM Usuario WHERE ID_Usuario = :id AND Rol='Docente'"), {"id": id})
+        db.session.commit()
+        return jsonify({"mensaje": "Docente eliminado"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+# ----------- ESTUDIANTES -----------
+@app.route('/api/estudiantes', methods=['GET'])
+def api_get_estudiantes():
+    estudiantes = Usuario.query.filter_by(Rol='Estudiante').all()
+    return jsonify([{
+        "id": e.ID_Usuario,
+        "nombre": e.Nombre,
+        "apellido": e.Apellido,
+        "correo": e.Correo
+    } for e in estudiantes])
+
+@app.route('/api/estudiantes', methods=['POST'])
+def api_create_estudiante():
+    data = request.json
+    try:
+        nuevo = Usuario(
+            Nombre=data['nombre'],
+            Apellido=data['apellido'],
+            Correo=data['correo'],
+            Contrasena=generate_password_hash("123456"),
+            TipoDocumento="CC",
+            NumeroDocumento=data.get("numero_doc", ""),
+            Telefono=data.get("telefono", ""),
+            Rol="Estudiante",
+            Estado="Activo",
+            Direccion="",
+            Genero="Otro"
+        )
+        db.session.add(nuevo)
+        db.session.commit()
+        return jsonify({"mensaje": "Estudiante creado", "id": nuevo.ID_Usuario}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/estudiantes/<int:id>', methods=['PUT'])
+def api_update_estudiante(id):
+    estudiante = Usuario.query.get_or_404(id)
+    data = request.json
+    estudiante.Nombre = data.get("nombre", estudiante.Nombre)
+    estudiante.Apellido = data.get("apellido", estudiante.Apellido)
+    estudiante.Correo = data.get("correo", estudiante.Correo)
+    db.session.commit()
+    return jsonify({"mensaje": "Estudiante actualizado"})
+
+@app.route('/api/estudiantes/<int:id>', methods=['DELETE'])
+def api_delete_estudiante(id):
+    try:
+        db.session.execute(text("DELETE FROM Usuario WHERE ID_Usuario = :id AND Rol='Estudiante'"), {"id": id})
+        db.session.commit()
+        return jsonify({"mensaje": "Estudiante eliminado"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+# ----------- ACUDIENTES -----------
+@app.route('/api/acudientes', methods=['GET'])
+def api_get_acudientes():
+    acudientes = Usuario.query.filter_by(Rol='Acudiente').all()
+    return jsonify([{
+        "id": a.ID_Usuario,
+        "nombre": a.Nombre,
+        "apellido": a.Apellido,
+        "correo": a.Correo
+    } for a in acudientes])
+
+@app.route('/api/acudientes', methods=['POST'])
+def api_create_acudiente():
+    data = request.json
+    try:
+        nuevo = Usuario(
+            Nombre=data['nombre'],
+            Apellido=data['apellido'],
+            Correo=data['correo'],
+            Contrasena=generate_password_hash("123456"),
+            TipoDocumento="CC",
+            NumeroDocumento=data.get("numero_doc", ""),
+            Telefono=data.get("telefono", ""),
+            Rol="Acudiente",
+            Estado="Activo",
+            Direccion=data.get("direccion", ""),
+            Genero="Otro"
+        )
+        db.session.add(nuevo)
+        db.session.commit()
+        return jsonify({"mensaje": "Acudiente creado", "id": nuevo.ID_Usuario}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/acudientes/<int:id>', methods=['PUT'])
+def api_update_acudiente(id):
+    acudiente = Usuario.query.get_or_404(id)
+    data = request.json
+    acudiente.Nombre = data.get("nombre", acudiente.Nombre)
+    acudiente.Apellido = data.get("apellido", acudiente.Apellido)
+    acudiente.Correo = data.get("correo", acudiente.Correo)
+    db.session.commit()
+    return jsonify({"mensaje": "Acudiente actualizado"})
+
+@app.route('/api/acudientes/<int:id>', methods=['DELETE'])
+def api_delete_acudiente(id):
+    try:
+        db.session.execute(text("DELETE FROM Usuario WHERE ID_Usuario = :id AND Rol='Acudiente'"), {"id": id})
+        db.session.commit()
+        return jsonify({"mensaje": "Acudiente eliminado"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
