@@ -41,39 +41,43 @@
             "shapes": ["c"]
         });
     </script>
-<div class="dropdown">
-  <button 
-    class="btn btn-edunotas position-relative dropdown-toggle" 
-    type="button" 
-    id="dropdownMenuButton" 
-    data-bs-toggle="dropdown" 
-    aria-expanded="false">
-    <span class="bi bi-envelope-fill"></span>
-  </button>
 
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><a class="dropdown-item" href="#">Ajustes</a></li>
-    <li><a class="dropdown-item" href="#">Opción 2</a></li>
-    <li><a class="dropdown-item" href="#">Opción 3</a></li>
-  </ul>
-</div>
+  <!-- Campanita de notificaciones -->
+  <div class="dropdown">
+    <button 
+      class="btn btn-edunotas position-relative dropdown-toggle" 
+      type="button" 
+      id="notificacionesButton" 
+      data-bs-toggle="dropdown" 
+      aria-expanded="false">
+      <i class="bi bi-bell-fill"></i>
+      <span id="notificaciones-count" 
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        0
+      </span>
+    </button>
 
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificacionesButton" id="notificaciones-list">
+      <li><span class="dropdown-item text-muted">No hay notificaciones</span></li>
+    </ul>
+  </div>
 
-<div class="dropdown">
-  <button 
-    class="btn btn-usuario dropdown-toggle" 
-    type="button" 
-    id="dropdownMenuButton" 
-    data-bs-toggle="dropdown" 
-    aria-expanded="false">
-    <span class="bi bi-person-lines-fill"></span>
-  </button>
+  <!-- Botón usuario -->
+  <div class="dropdown">
+    <button 
+      class="btn btn-usuario dropdown-toggle" 
+      type="button" 
+      id="dropdownMenuButton" 
+      data-bs-toggle="dropdown" 
+      aria-expanded="false">
+      <span class="bi bi-person-lines-fill"></span>
+    </button>
 
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <li><a class="dropdown-item" href="{{url_for('perfil')}}">Perfil</a></li>
-    <li><a class="dropdown-item" href="{{url_for('login')}}">Cerrar sesión</a></li>
-  </ul>
-</div>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <li><a class="dropdown-item" href="{{url_for('perfil')}}">Perfil</a></li>
+      <li><a class="dropdown-item" href="{{url_for('login')}}">Cerrar sesión</a></li>
+    </ul>
+  </div>
 
 </a>
   </header>
