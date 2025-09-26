@@ -52,6 +52,25 @@ class Acudiente(db.Model):
     usuario = relationship('Usuario', back_populates='acudientes', foreign_keys=[ID_Usuario])
 
 
+
+# -----------------------------------------------------
+# Notificaciòn(nuevo)
+# -----------------------------------------------------
+class Notificacion(db.Model):
+    __tablename__ = "Notificacion"
+    ID_Notificacion = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Titulo = db.Column(db.String(150), nullable=False)
+    Mensaje = db.Column(db.String(300), nullable=False)
+    Enlace = db.Column(db.String(255), nullable=True)
+    Estado = db.Column(db.Enum('Leída', 'No leída'), default='No leída')
+    Fecha = db.Column(db.DateTime, default=db.func.now())
+
+    # Relación con usuario
+    ID_Usuario = db.Column(db.Integer, db.ForeignKey("Usuario.ID_Usuario"), nullable=False)
+    usuario = db.relationship("Usuario", backref="notificaciones", lazy=True)
+
+
+
 # -----------------------------------------------------
 # Curso
 # -----------------------------------------------------

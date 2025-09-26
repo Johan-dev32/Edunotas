@@ -140,3 +140,41 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
+
+
+// 🔔 Manejo de notificaciones (campanita)
+document.addEventListener("DOMContentLoaded", function () {
+  const listaNotificaciones = document.getElementById("listaNotificaciones");
+  const contador = document.getElementById("contadorNotificaciones");
+
+  function cargarNotificaciones() {
+    fetch("/api/notificaciones")
+      .then(response => response.json())
+      .then(data => {
+        listaNotificaciones.innerHTML = "";
+
+        if (data.length === 0) {
+          listaNotificaciones.innerHTML = "<li class='dropdown-item text-muted'>No hay notificaciones</li>";
+          contador.textContent = 0;
+          return;
+        }
+
+        contador.textContent = data.length;
+
+        data.forEach(notificacion => {
+          const li = document.createElement("li");
+          li.innerHTML = `<a href="${notificacion.enlace}" class="dropdown-item">${notificacion.mensaje}</a>`;
+          listaNotificaciones.appendChild(li);
+        });
+      })
+      .catch(error => {
+        console.error("Error al cargar notificaciones:", error);
+      });
+  }
+
+  // Cargar al abrir la página
+  cargarNotificaciones();
+
+  // Refrescar cada 30 segundos
+  setInterval(cargarNotificaciones, 30000);
+});

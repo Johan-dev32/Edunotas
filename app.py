@@ -1,4 +1,7 @@
 import os
+#nuevo
+from werkzeug.utils import secure_filename
+#
 from flask import Flask, render_template, request, redirect, url_for, flash, session, send_file, jsonify  # <-- añadí send_file, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -14,9 +17,18 @@ from sqlalchemy import text
 
 # Importa el objeto 'db' y los modelos desde tu archivo de modelos
 from database.models import db, Usuario
+#nuevo
+from flask import Flask, jsonify
+from flask_login import login_required, current_user
+from database.models import Notificacion
 
 # Configuración de la aplicación
 app = Flask(__name__)
+
+#nuevo
+UPLOAD_FOLDER = os.path.join("static", "uploads", "circulares")
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Configuración de la base de datos
 DB_URL = 'mysql+pymysql://root:@127.0.0.1:3306/edunotas'
@@ -357,9 +369,13 @@ def reunion():
 def noticias():
     return render_template('Administrador/templates/Noticias.html')
 
+#nuevo#################################33
 @app.route('/circulares')
+@login_required
 def circulares():
-    return render_template('Administrador/templates/Circulares.html')
+    files = os.listdir(app.config["UPLOAD_FOLDER"])
+    return render_template('Administrador/templates/Circulares.html', files=files)
+
 
 @app.route('/noticias_vistas')
 def noticias_vistas():
@@ -498,6 +514,45 @@ def materialapoyo2():
 @app.route('/registrotutorias2')
 def registrotutorias2():
     return render_template('Administrador/templates/RegistroTutorías2.html')
+
+#nuevox2
+@app.route("/api/notificaciones")
+@login_required
+def api_notificaciones():
+    notificaciones = Notificacion.query.filter_by(ID_Usuario=current_user.ID_Usuario).order_by(Notificacion.Fecha.desc()).all()
+    
+    data = [
+        {
+            "id": n.ID_Notificacion,
+            "titulo": n.Titulo,
+            "mensaje": n.Mensaje,
+            "enlace": n.Enlace,
+            "estado": n.Estado,
+            "fecha": n.Fecha.strftime("%d/%m/%Y %H:%M")
+        }
+        for n in notificaciones
+    ]
+    
+    return jsonify(data)
+
+
+#nuevo
+@app.route("/subir_circular", methods=["POST"])
+@login_required
+def subir_circular():
+    if "file" not in request.files:
+        return jsonify({"success": False, "error": "No se envió archivo"})
+    
+    file = request.files["file"]
+    if file.filename == "":
+        return jsonify({"success": False, "error": "Archivo sin nombre"})
+
+    filename = secure_filename(file.filename)
+    filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+    file.save(filepath)
+
+
+    return jsonify({"success": True, "filename": filename})
 
 
 
