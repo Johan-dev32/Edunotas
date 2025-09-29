@@ -51,61 +51,6 @@ with app.app_context():
 def index():
     return render_template("Login.html")
 
-@app.route('/registro', methods=['GET', 'POST'])
-def registro():
-    if request.method == 'POST':
-        nombre = request.form.get('Nombre')
-        apellido = request.form.get('Apellido')
-        correo = request.form.get('Correo')
-        contrasena = request.form.get('Contrasena')
-        numero_documento = request.form.get('NumeroDocumento')
-        telefono = request.form.get('Telefono')
-        direccion = request.form.get('Direccion')
-        rol = request.form.get('Rol')
-
-        tipo_documento = request.form.get('TipoDocumento', 'CC')
-        estado = request.form.get('Estado', 'Activo')
-        genero = request.form.get('Genero', '')
-
-        if not all([nombre, apellido, correo, contrasena, numero_documento, telefono, direccion, rol]):
-            flash('Por favor, completa todos los campos requeridos.')
-            return render_template('Administrador/templates/Registro.html')
-
-        try:
-            existing_user = Usuario.query.filter_by(Correo=correo).first()
-            if existing_user:
-                flash('El correo ya está registrado.')
-                return render_template('Administrador/templates/Registro.html')
-
-            hashed_password = generate_password_hash(contrasena)
-            
-            new_user = Usuario(
-                Nombre=nombre,
-                Apellido=apellido,
-                Correo=correo,
-                Contrasena=hashed_password,
-                TipoDocumento=tipo_documento,
-                NumeroDocumento=numero_documento,
-                Telefono=telefono,
-                Direccion=direccion,
-                Rol=rol,
-                Estado=estado,
-                Genero=genero
-            )
-            
-            
-            db.session.add(new_user)
-            db.session.commit()
-
-            flash('Cuenta creada exitosamente. Inicia sesión.')
-            return redirect(url_for('login'))
-        
-        except SQLAlchemyError as e:
-            db.session.rollback()
-            flash(f'Error al registrar: {str(e)}')
-            return render_template('Administrador/templates/Registro.html')
-
-    return render_template('Administrador/templates/Registro.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])

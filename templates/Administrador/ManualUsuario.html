@@ -77,16 +77,9 @@
     <ul class="nav flex-column ms-3">
      <li class=""><a href="{{ url_for('Administrador.notas_registro') }}" class="nav-link text-white"><i class="bi bi-list-stars"></i> Registrar Notas</a></li>
     </ul>
-    <ul class="nav flex-column ms-3">
-     <li class=""><a href="{{ url_for('verpromedio') }}" class="nav-link text-white"><i class="bi bi-list-stars"></i> Calculo de Promedio</a></li>
-    </ul>
   </div>
-<<<<<<< HEAD:templates/Administrador/ManualUsuario.html
   <li class="nav-item"><a href="{{ url_for('Administrador.observador') }}" class="nav-link text-white"><i class="bi bi-eye-fill"></i> Observador</a></li>
   <li class="nav-item"><a href="{{ url_for('Administrador.manual') }}" class="nav-link text-white"><i class="bi bi-journal-medical"></i> Manual del Usuario</a></li>
-=======
-  <li class="nav-item"><a href="{{ url_for('observador') }}" class="nav-link text-white"><i class="bi bi-eye-fill"></i> Observador</a></li>
->>>>>>> f968ce65124a6f032d20c4e2957637b2da2aae63:templates/Administrador/templates/ManualUsuario.html
   <li class="nav-item">
   <a class="nav-link text-white" data-bs-toggle="collapse" href="#submenuUsuarios" role="button" aria-expanded="false" aria-controls="submenuUsuarios">
     <i class="bi bi-caret-down-fill"></i> Gestión de Usuarios
@@ -95,13 +88,8 @@
   <div class="collapse" id="submenuUsuarios">
     <ul class="nav flex-column ms-3">
       <li class="nav-item">
-<<<<<<< HEAD:templates/Administrador/ManualUsuario.html
         <a href="{{ url_for('Administrador.profesores') }}" class="nav-link text-white">
           <i class="bi bi-person-fill-gear"></i>Profesores
-=======
-        <a href="{{ url_for('profesores') }}" class="nav-link text-white">
-          <i class="bi bi-person-fill-gear"></i> Profesores
->>>>>>> f968ce65124a6f032d20c4e2957637b2da2aae63:templates/Administrador/templates/ManualUsuario.html
         </a>
       </li>
       <li class="nav-item">
@@ -118,45 +106,13 @@
   </div>
 </li>
 
-<<<<<<< HEAD:templates/Administrador/ManualUsuario.html
   <li class="nav-item"><a href="{{ url_for('Administrador.asignaturas') }}" class="nav-link text-white"><i class="bi bi-journals"></i> Asignatura</a></li>
   <li class="nav-item"><a href="{{ url_for('Administrador.horarios') }}" class="nav-link text-white"><i class="bi bi-globe-americas"></i> Horarios</a></li>
-=======
-
-<li class="nav-item">
-  <a class="nav-link text-white" data-bs-toggle="collapse" href="#submenuEncuestas" role="button" aria-expanded="false" aria-controls="submenuEncuestas">
-    <i class="bi bi-caret-down-fill"></i> Encuestas
-  </a>
-
-  <div class="collapse" id="submenuEncuestas">
-    <ul class="nav flex-column ms-3">
-      <li class="nav-item">
-        <a href="{{ url_for('crear_encuesta') }}" class="nav-link text-white">
-          <i class="bi bi-file-earmark-plus-fill"></i> Crear Encuesta
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url_for('editar_eliminar_encuesta') }}" class="nav-link text-white">
-          <i class="bi bi-pencil-square"></i> Editar / Eliminar Encuesta
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url_for('resultados_encuesta') }}" class="nav-link text-white">
-          <i class="bi bi-bar-chart-fill"></i> Ver Resultados
-        </a>
-      </li>
-    </ul>
-  </div>
-</li>
-
-  <li class="nav-item"><a href="{{ url_for('asignaturas') }}" class="nav-link text-white"><i class="bi bi-journals"></i> Asignatura</a></li>
-  <li class="nav-item"><a href="{{ url_for('horarios') }}" class="nav-link text-white"><i class="bi bi-globe-americas"></i> Horarios</a></li>
->>>>>>> f968ce65124a6f032d20c4e2957637b2da2aae63:templates/Administrador/templates/ManualUsuario.html
  </ul>
  </div>
 </div>
 
-</header>
+ </header>
  
 </div>
   <div class="header-right">
@@ -164,26 +120,10 @@
     <i class="fa-solid fa-download"></i><i class="bi bi-file-earmark-arrow-down-fill"></i>  PDF</button>
     
 </div>
-<div class="container my-4 text-center">
-  <button class="btn manual m-1" onclick="cambiarManual(1)">Manual Administrador</button>
-  <button class="btn manual m-1" onclick="cambiarManual(2)">Manual Docente</button>
-  <button class="btn manual m-1" onclick="cambiarManual(3)">Manual Estudiante</button>
-  <button class="btn manual m-1" onclick="cambiarManual(4)">Manual Acudiente</button>
-
-</div>
+  
  
-  <div class="container" id="contenidoManual"> 
-    
-    
-
- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
-<script>
-  function cambiarManual(tipo) {
-    const cont = document.getElementById("contenidoManual");
-
-    if (tipo === 1) {
-      cont.innerHTML = `
-        <h2>Manual de Usuario – Administrador</h2>
+  <div class="container">
+    <h2>Manual de Usuario – Administrador</h2>
 
     <h3>1. Introducción</h3>
     <p>El presente manual describe las funciones y responsabilidades del Administrador dentro del sistema EduNotas.
@@ -295,170 +235,18 @@
       <li>Capturas de pantalla.</li>
     </ul>
   </div>
-      `;
-    } 
-    else if (tipo === 2) {
-      cont.innerHTML = `
-        <h2>Manual de Usuario – Docente</h2>
-
-<h3>1. Introducción</h3>
-<p>
-El presente manual está dirigido a los docentes que harán uso del sistema
-<strong>EduNotas</strong>. Su propósito es guiar al profesor en la gestión de notas,
-asistencia y actividades académicas, así como en la comunicación con los estudiantes
-y acudientes.
-</p>
-
-<h3>2. Acceso al sistema</h3>
-<p>
-El docente deberá ingresar con las credenciales asignadas por el administrador
-(nombre de usuario y contraseña). Una vez dentro, accederá a un panel donde encontrará
-todas las herramientas relacionadas con sus cursos.
-</p>
-
-<h3>3. Funciones principales</h3>
-<ul>
-  <li><strong>Gestión de notas:</strong> Registrar, modificar y consultar las calificaciones de cada estudiante en las diferentes asignaturas.</li>
-  <li><strong>Control de asistencia:</strong> Marcar asistencia, tardanzas e inasistencias de los estudiantes de forma rápida.</li>
-  <li><strong>Generación de reportes:</strong> Descargar reportes individuales o grupales de desempeño académico y de asistencia.</li>
-  <li><strong>Registro de tutorías:</strong> Agendar y dejar constancia de las tutorías realizadas con los estudiantes.</li>
-  <li><strong>Comunicación:</strong> Enviar notificaciones o mensajes a los acudientes a través de la plataforma.</li>
-</ul>
-
-<h3>4. Pasos de uso</h3>
-<ol>
-  <li>Iniciar sesión con su usuario y contraseña.</li>
-  <li>Seleccionar el curso o grupo desde el panel principal.</li>
-  <li>Acceder a la opción deseada: <em>Notas, Asistencia, Tutorías, Reportes</em>.</li>
-  <li>Guardar los cambios realizados y verificar que la información quede registrada.</li>
-  <li>Cerrar sesión al finalizar la jornada.</li>
-</ol>
-
-<h3>5. Recomendaciones</h3>
-<ul>
-  <li>Verificar periódicamente que las notas y asistencias estén actualizadas.</li>
-  <li>Mantener comunicación constante con los acudientes a través de la plataforma.</li>
-  <li>Usar la sección de reportes antes de cada corte académico.</li>
-</ul>
-
-<h3>6. Soporte</h3>
-<p>
-En caso de dudas o inconvenientes técnicos, el docente debe contactar al administrador del sistema
-o al área de soporte institucional.
-</p>
-      `;
-    }
-    else if (tipo === 3) {
-      cont.innerHTML = `
-       <h2>Manual de Usuario – Estudiante</h2>
-
-<h3>1. Introducción</h3>
-<p>
-Este manual está diseñado para los estudiantes que usarán el sistema
-<strong>EduNotas</strong>. Su finalidad es explicar cómo consultar sus calificaciones,
-revisar su asistencia, comunicarse con los docentes y acceder a los reportes de su
-desempeño académico.
-</p>
-
-<h3>2. Acceso al sistema</h3>
-<p>
-El estudiante deberá ingresar con las credenciales asignadas (usuario y contraseña).
-Al entrar, verá un panel con acceso directo a sus cursos, notas y asistencia.
-</p>
-
-<h3>3. Funciones principales</h3>
-<ul>
-  <li><strong>Consultar calificaciones:</strong> Ver las notas obtenidas en cada asignatura, evaluaciones y trabajos.</li>
-  <li><strong>Revisar asistencia:</strong> Confirmar sus registros de asistencias, tardanzas e inasistencias.</li>
-  <li><strong>Ver reportes:</strong> Descargar reportes individuales de desempeño académico.</li>
-  <li><strong>Comunicación:</strong> Recibir notificaciones y mensajes de docentes o de la institución.</li>
-</ul>
-
-<h3>4. Pasos de uso</h3>
-<ol>
-  <li>Iniciar sesión en el sistema con su usuario y contraseña.</li>
-  <li>Seleccionar la opción deseada: <em>Notas, Asistencia, Reportes</em>.</li>
-  <li>Revisar la información actualizada sobre su desempeño académico.</li>
-  <li>Guardar o descargar reportes cuando sea necesario.</li>
-  <li>Cerrar sesión después de cada uso para proteger la cuenta.</li>
-</ol>
-
-<h3>5. Recomendaciones</h3>
-<ul>
-  <li>Revisar periódicamente las calificaciones para estar al día con su rendimiento.</li>
-  <li>Verificar los registros de asistencia y reportar inconsistencias al docente.</li>
-  <li>Leer siempre las notificaciones enviadas por la institución.</li>
-</ul>
-
-<h3>6. Soporte</h3>
-<p>
-En caso de problemas con el acceso o con la información mostrada, el estudiante debe
-comunicarse con su docente o con el área de soporte del sistema.
-</p>
-      `;
-    }
-    else if (tipo === 4) {
-      cont.innerHTML = `
-        <h2>Manual de Usuario – Acudiente</h2>
-
-<h3>1. Introducción</h3>
-<p>
-Este manual está dirigido a los acudientes o padres de familia que utilizan el sistema 
-<strong>EduNotas</strong>. Su objetivo es orientar en el seguimiento académico y disciplinario 
-de los estudiantes, permitiendo una comunicación directa con la institución educativa.
-</p>
-
-<h3>2. Acceso al sistema</h3>
-<p>
-El acudiente debe ingresar con las credenciales asignadas por la institución 
-(usuario y contraseña). Una vez dentro, podrá visualizar la información académica, 
-asistencia y notificaciones del estudiante a su cargo.
-</p>
-
-<h3>3. Funciones principales</h3>
-<ul>
-  <li><strong>Consultar calificaciones:</strong> Revisar las notas obtenidas por el estudiante en cada asignatura.</li>
-  <li><strong>Ver asistencia:</strong> Controlar las inasistencias y tardanzas registradas.</li>
-  <li><strong>Historial disciplinario:</strong> Acceder a observaciones o reportes de comportamiento.</li>
-  <li><strong>Notificaciones:</strong> Recibir avisos importantes de la institución.</li>
-  <li><strong>Comunicación:</strong> Enviar y recibir mensajes con docentes o coordinadores.</li>
-</ul>
-
-<h3>4. Pasos de uso</h3>
-<ol>
-  <li>Ingresar al sistema con su usuario y contraseña.</li>
-  <li>Seleccionar el menú correspondiente: <em>Notas, Asistencia, Observador</em>.</li>
-  <li>Consultar el estado académico y disciplinario del estudiante.</li>
-  <li>Descargar reportes si es necesario.</li>
-  <li>Cerrar sesión después de cada consulta para mantener la seguridad.</li>
-</ol>
-
-<h3>5. Recomendaciones</h3>
-<ul>
-  <li>Consultar regularmente las notas y asistencia para estar al tanto del progreso del estudiante.</li>
-  <li>Atender las notificaciones enviadas por la institución.</li>
-  <li>Usar el canal de comunicación para aclarar dudas o situaciones con los docentes.</li>
-</ul>
-
-<h3>6. Soporte</h3>
-<p>
-En caso de inconvenientes con el acceso o con la información, el acudiente debe 
-contactar al área de coordinación académica o soporte institucional.
-</p>
-      `;
-    }
-  }
-
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script>
   function generarPDF() {
-    const element = document.getElementById("contenidoManual");
+    const element = document.querySelector('.container');
     html2pdf()
       .from(element)
       .set({
         margin: 0.5,
-        filename: 'Manual_EduNotas.pdf',
+        filename: 'Manual_Administrador.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' }
+        jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape' }
       })
       .save();
   }

@@ -114,33 +114,22 @@ header .btn-dark {
   border-collapse: collapse;
   width: 100%;
   font-size: 14px;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-weight: bolder;
-  color: #ffffff;
 }
 
 .tabla-tutorias th, 
 .tabla-tutorias td {
-  border: 1px solid #514e4e;
+  border: 1px solid #333;
   padding: 8px;
   text-align: left;
 }
 
 .tabla-tutorias th {
-  background-color: #050733ff;
+  background-color: #f2f2f2;
   text-align: center;
-}
-.tabla-tutorias td {
-  background-color: #fff;
-  color: #000;                /* negro */
-  padding: 8px;
-  border: 1px solid #514e4e;
-  text-align: left;
 }
 
 .tabla-tutorias tr:nth-child(even) {
-  background-color: #ffffff;
-
+  background-color: #fafafa;
 }
 #accionesTutorias .d-flex {
   border: 1px solid #333;
