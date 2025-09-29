@@ -416,6 +416,20 @@ def calculopromedio(curso_id):
     return render_template('Administrador/templates/CalculoPromedio.html', curso_id=curso_id)
 
 
+@app.route('/crear_encuesta')
+def crear_encuesta():
+    return render_template('Administrador/templates/CrearEncuesta.html')
+
+@app.route('/editar_eliminar_encuesta')
+def editar_eliminar_encuesta():
+    return render_template('Administrador/templates/EditarEliminarEncuesta.html')
+
+@app.route('/resultados_encuesta')
+def resultados_encuesta():
+    return render_template('Administrador/templates/ResultadosEncuesta.html')
+
+
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     if request.method == 'POST':

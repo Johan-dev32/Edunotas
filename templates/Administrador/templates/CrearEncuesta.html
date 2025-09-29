@@ -3,21 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Colegio Fe y Alegría</title>
+  <title>Crear Encuesta - EduNotas</title>
   <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Iconos -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- CSS propio -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/Administrador/Circulares.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Administrador/CrearEncuesta.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 </head>
 <body>
 
+  <!-- NAVBAR -->
   <header class="d-flex align-items-center p-3 border-bottom w-100">
     <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
       <i class="bi bi-list"></i>
     </button>
     <h2 class="titulo-header mx-4 mb-0">| COLEGIO FE Y ALEGRIA</h2>
+
 
     <div class="dropdown ms-auto">
       <button 
@@ -34,6 +36,7 @@
         <li><a class="dropdown-item" href="#">Opción 3</a></li>
       </ul>
     </div>
+
 
     <div class="dropdown">
       <button 
@@ -133,59 +136,108 @@
  </ul>
  </div>
 </div>
-  <!-- CONTENIDO -->
-  <h1 class="text-center titulo-principal">CREAR CIRCULARES</h1>
-  <p class="text-center descripcion">Crea tus Circulares para que el Colegio se informe</p>
 
-  <!-- 🔹 FORMULARIO -->
-  <form id="circularForm" enctype="multipart/form-data">
-    <div class="mb-3">
-      <label class="texto-documento">COLOCA EL DOCUMENTO</label>
-      <div class="upload-box text-center p-4 border rounded">
-        <input type="file" id="fileUpload" name="file" class="d-none" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif">
-        <label for="fileUpload" class="upload-label">
-          <!-- Ícono -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="blue" class="mb-2" viewBox="0 0 16 16">
-            <path d="M4 0a2 2 0 0 0-2 2v12a2 
-            2 0 0 0 2 2h8a2 2 0 0 0 
-            2-2V6l-6-6H4z"/>
-          </svg>
-          <p class="text-muted">Haz clic para seleccionar un archivo</p>
-        </label>
+<div class="container mt-4">
+  <div class="row">
+
+  <!-- CONTENIDO ENCUESTA -->
+  <section class="container mt-5">
+    <h1 class="text-center titulo-principal" id="formTitle">Crear Encuesta</h1>
+    <p class="text-center descripcion" id="formDescription">Es hora de crear una encuesta</p>
+    <form id="encuestaForm" class="p-4 bg-light border rounded">
+  <div class="row mb-3">
+    <!-- Fecha -->
+    <div class="col-md-3">
+      <label class="form-label">Fecha de cierre</label>
+      <input type="date" class="form-control" id="fechaCierre">
+    </div>
+
+    <!-- Título + Imagen -->
+    <div class="col-md-6">
+      <label class="form-label">Título</label>
+      <input type="text" class="form-control mb-2" id="tituloEncuesta" placeholder="Ingrese un título">
+
+      <label class="form-label">Imagen (opcional)</label>
+      <input type="file" class="form-control" id="imgInput" accept="image/*">
+      <div id="imgPreview" class="border rounded mt-2 text-center p-2" style="height:120px; color:#777;">
+        Sin imagen
       </div>
     </div>
-    <div class="text-center mb-5">
-      <button type="submit" id="btnSubirDocumento" class="btn btn-primary">
-        <i class="bi bi-upload"></i> Subir Documento
-      </button>
-    </div>
-  </form>
 
-  <!-- 🔹 LISTA DE CIRCULARES EN ACORDEÓN -->
-  <h2 class="text-center my-4">CIRCULARES ESTUDIANTILES</h2>
+    <!-- Dirigido a -->
+<div class="col-md-3">
+  <label class="form-label">Dirigido a:</label><br>
 
-  <div class="accordion" id="accordionCirculares">
-    {% for file in files %}
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="heading{{ loop.index }}">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
-          Circular #{{ loop.index }}
-        </button>
-      </h2>
-      <div id="collapse{{ loop.index }}" class="accordion-collapse collapse" aria-labelledby="heading{{ loop.index }}" data-bs-parent="#accordionCirculares">
-        <div class="accordion-body">
-          <a href="{{ url_for('static', filename='uploads/circulares/' + file) }}" target="_blank" class="btn btn-outline-primary">
-            📄 Ver Circular
-          </a>
-        </div>
-      </div>
-    </div>
-    {% else %}
-    <p class="text-center">No hay circulares aún.</p>
-    {% endfor %}
+  <!-- Administradores -->
+  <div class="form-check mb-2">
+    <input class="form-check-input targetChk" type="checkbox" value="Administradores" id="chkAdmins">
+    <label class="form-check-label" for="chkAdmins">Administradores</label>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="{{ url_for('static', filename='js/Administrador/Circulares.js') }}"></script>
+  <!-- Docentes -->
+  <div class="form-check mb-2">
+    <input class="form-check-input targetChk" type="checkbox" value="Docentes" id="chkDoc">
+    <label class="form-check-label" for="chkDoc">Docentes</label>
+    <select class="form-select mt-1 d-none" id="materiaSelect">
+      <option value="">Seleccione materia</option>
+    </select>
+  </div>
+
+  <!-- Estudiantes -->
+  <div class="form-check mb-2">
+    <input class="form-check-input targetChk" type="checkbox" value="Estudiantes" id="chkEst">
+    <label class="form-check-label" for="chkEst">Estudiantes</label>
+    <select class="form-select mt-1 d-none" id="gradoSelectEst">
+      <option value="">Seleccione grado</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+    </select>
+    <select class="form-select mt-1 d-none" id="cursoSelectEst">
+      <option value="">Seleccione curso</option>
+    </select>
+  </div>
+
+  <!-- Acudientes -->
+  <div class="form-check mb-2">
+    <input class="form-check-input targetChk" type="checkbox" value="Acudientes" id="chkAcu">
+    <label class="form-check-label" for="chkAcu">Acudientes</label>
+    <select class="form-select mt-1 d-none" id="gradoSelectAcu">
+      <option value="">Seleccione grado</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+    </select>
+    <select class="form-select mt-1 d-none" id="cursoSelectAcu">
+      <option value="">Seleccione curso</option>
+    </select>
+  </div>
+</div>
+  <!-- Contenedor preguntas dinámicas -->
+  <div id="preguntasContainer"></div>
+
+  <button type="button" class="btn btn-primary mb-3" id="agregarPregunta">+ Agregar Pregunta</button>
+  <br>
+  <button type="submit" class="btn btn-success">Enviar Encuesta</button>
+</form>
+  </section>
+
+
+      <script>
+        
+        const LISTA_ENCUESTAS_URL = "{{ url_for('editar_eliminar_encuesta') }}";
+        console.log("DEBUG: LISTA_ENCUESTAS_URL seteada en HTML:", LISTA_ENCUESTAS_URL);
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/Administrador/encuesta.js"></script>
+
 </body>
 </html>
