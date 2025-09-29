@@ -241,3 +241,8 @@ li {
   background-color: #ffffff; 
   color: #ff0000;
 }
+.manual{
+  background-color: #050733ff;
+  color: rgb(255, 255, 255);
+  font-family: 'Trebuchet MS', sans-serif;
+}

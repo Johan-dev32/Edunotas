@@ -54,9 +54,8 @@
 </a>
   </header>
 
-<!-- Menú lateral -->
-
-<div class="offcanvas offcanvas-start text-white" tabindex="-1" id="sidebar">
+<!--  MENU  -->
+  <div class="offcanvas offcanvas-start text-white" tabindex="-1" id="sidebar">
  <div class="offcanvas-header">
   <h5 class="offcanvas-title">MENÚ</h5>
 </div>
@@ -71,7 +70,14 @@
     <ul class="nav flex-column ms-3">
      <li class=""><a href="{{ url_for('Administrador.notas_consultar') }}" class="nav-link text-white"><i class="bi bi-list-stars"></i> Consultar Notas</a></li>
     </ul>
+    <ul class="nav flex-column ms-3">
+     <li class=""><a href="{{ url_for('notasr') }}" class="nav-link text-white"><i class="bi bi-list-stars"></i> Registrar Notas</a></li>
+    </ul>
+    <ul class="nav flex-column ms-3">
+     <li class=""><a href="{{ url_for('verpromedio') }}" class="nav-link text-white"><i class="bi bi-list-stars"></i> Calculo de Promedio</a></li>
+    </ul>
   </div>
+<<<<<<< HEAD:templates/Administrador/Observador.html
   <li class="nav-item"><a href="{{ url_for('Administrador.observador') }}" class="nav-link text-white"><i class="bi bi-eye-fill"></i> Observador</a></li>
   <li class="nav-item"><a href="{{ url_for('Administrador.profesores') }}" class="nav-link text-white"><i class="bi bi-person-video2"></i> Profesores</a></li>
   <li class="nav-item"><a href="{{ url_for('Administrador.manual') }}" class="nav-link text-white"><i class="bi bi-journal-medical"></i> Manual del Usuario</a></li>
@@ -80,6 +86,64 @@
   <li class="nav-item"><a href="{{ url_for('Administrador.usuarios') }}" class="nav-link text-white"><i class="bi bi-person-fill-gear"></i> Gestión de Usuarios</a></li>
   <li class="nav-item"><a href="{{ url_for('Administrador.asignaturas') }}" class="nav-link text-white"><i class="bi bi-journals"></i> Asignatura</a></li>
   <li class="nav-item"><a href="{{ url_for('Administrador.horarios') }}" class="nav-link text-white"><i class="bi bi-globe-americas"></i> Horarios</a></li>
+=======
+  <li class="nav-item"><a href="{{ url_for('observador') }}" class="nav-link text-white"><i class="bi bi-eye-fill"></i> Observador</a></li>
+  <li class="nav-item">
+  <a class="nav-link text-white" data-bs-toggle="collapse" href="#submenuUsuarios" role="button" aria-expanded="false" aria-controls="submenuUsuarios">
+    <i class="bi bi-caret-down-fill"></i> Gestión de Usuarios
+  </a>
+
+  <div class="collapse" id="submenuUsuarios">
+    <ul class="nav flex-column ms-3">
+      <li class="nav-item">
+        <a href="{{ url_for('profesores') }}" class="nav-link text-white">
+          <i class="bi bi-person-fill-gear"></i> Profesores
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url_for('acudientes') }}" class="nav-link text-white">
+          <i class="bi bi-person-fill"></i> Acudientes
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url_for('estudiantes') }}" class="nav-link text-white">
+          <i class="bi bi-mortarboard-fill"></i> Estudiantes
+        </a>
+      </li>
+    </ul>
+  </div>
+</li>
+
+
+<li class="nav-item">
+  <a class="nav-link text-white" data-bs-toggle="collapse" href="#submenuEncuestas" role="button" aria-expanded="false" aria-controls="submenuEncuestas">
+    <i class="bi bi-caret-down-fill"></i> Encuestas
+  </a>
+
+  <div class="collapse" id="submenuEncuestas">
+    <ul class="nav flex-column ms-3">
+      <li class="nav-item">
+        <a href="{{ url_for('crear_encuesta') }}" class="nav-link text-white">
+          <i class="bi bi-file-earmark-plus-fill"></i> Crear Encuesta
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url_for('editar_eliminar_encuesta') }}" class="nav-link text-white">
+          <i class="bi bi-pencil-square"></i> Editar / Eliminar Encuesta
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url_for('resultados_encuesta') }}" class="nav-link text-white">
+          <i class="bi bi-bar-chart-fill"></i> Ver Resultados
+        </a>
+      </li>
+    </ul>
+  </div>
+</li>
+
+  <li class="nav-item"><a href="{{ url_for('asignaturas') }}" class="nav-link text-white"><i class="bi bi-journals"></i> Asignatura</a></li>
+  <li class="nav-item"><a href="{{ url_for('horarios') }}" class="nav-link text-white"><i class="bi bi-globe-americas"></i> Horarios</a></li>
+>>>>>>> f968ce65124a6f032d20c4e2957637b2da2aae63:templates/Administrador/templates/Observador.html
  </ul>
  </div>
 </div>
